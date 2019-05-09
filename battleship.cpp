@@ -40,9 +40,29 @@ CellContent get_shot(int row, int col)
   }
   return _my_field[row][col];
 }
+void fill(int row, int col)
+{
+  if (row < FIELDSIZE || col < FIELDSIZE || row >= 0 || col >= 0)
+  {
+    _my_guess[row][col] = Water;
+  }
+}
 bool shoot(int row, int col)
 {
-  return false;
+  if (row >= FIELDSIZE || col >= FIELDSIZE || row < 0 || col < 0)
+  {
+    return false;
+  }
+  fill(row+1, col);
+  fill(row+1, col+1);
+  fill(row, col+1);
+  fill(row-1, col);
+  fill(row-1, col-1);
+  fill(row-1, col+1);
+  fill(row+1, col-1);
+  fill(row, col-1);
+  _my_guess[row][col]=_other_field[row][col];
+  return true;
 }
 CellContent get_my_guess(int row, int col)
 {
